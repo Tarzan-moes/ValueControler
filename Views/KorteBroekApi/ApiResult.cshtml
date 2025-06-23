@@ -1,0 +1,52 @@
+@model KorteBroeken.Models.WeerModel
+@{
+    ViewData["Title"] = "Weer in Eindhoven - Kan ik een korte broek aan?";
+}
+
+<div class="weer-resultaat-container">
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            <h4>Fout</h4>
+            <p>@ViewBag.Error</p>
+            <p>Probeer het later opnieuw.</p>
+        </div>
+    }
+    else
+    {
+        <div class="resultaat @(Model.KanKorteBroekAan ? "resultaat-ja" : "resultaat-nee")">
+            <div class="weer-info">
+                <h1 class="antwoord-tekst">@Model.Bericht</h1>
+                <p class="locatie-info">Gebaseerd op het huidige weer in Eindhoven:</p>
+                <div class="weer-details">
+                    <div class="weer-item">
+                        <span class="weer-label">Temperatuur:</span>
+                        <span class="weer-waarde">@Model.Temperatuur °C</span>
+                    </div>
+                    <div class="weer-item">
+                        <span class="weer-label">Regenkans:</span>
+                        <span class="weer-waarde">@Model.Regenkans %</span>
+                    </div>
+                    <div class="weer-item">
+                        <span class="weer-label">Laatste update:</span>
+                        <span class="weer-waarde">@DateTime.Now.ToString("dd-MM-yyyy HH:mm")</span>
+                    </div>
+                </div>
+            </div>
+            <div class="weer-afbeelding">
+                @if (Model.KanKorteBroekAan)
+                {
+                    <img src="~/images/korte-broek-ja.jpg" alt="Korte broek" />
+                }
+                else
+                {
+                    <img src="~/images/korte-broek-nee.jpg" alt="Lange broek" />
+                }
+            </div>
+        </div>
+    }
+    
+    <div class="navigatie-knoppen">
+        <a href="/KorteBroek" class="btn btn-primary terug-knop">Terug naar de vraag</a>
+    </div>
+</div>

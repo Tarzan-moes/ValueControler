@@ -1,19 +1,100 @@
-@page
-@model ValueControler.Views.KorteBroek.Index
-
 @{
-    Layout = null;
+    ViewData["Title"] = "Kan ik vandaag een korte broek aan?";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-<div>
-    
+<div class="korte-broek-container">
+    <div class="vraag-container">
+        @if (ViewBag.SpeciaalBericht != null)
+        {
+            <h1 class="speciaal-bericht">@ViewBag.SpeciaalBericht</h1>
+            <div class="korte-broek-image">
+                <img src="~/images/korte-broek-ja.jpg" alt="Korte broek" />
+            </div>
+        }
+        else
+        {
+            <h1 class="hoofdvraag">Kan ik vandaag een korte broek aan?</h1>
+            
+            <div class="weer-formulier">
+                <form action="/KorteBroek/Weer" method="get" id="weerForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="temperatuur">Temperatuur (°C)</label>
+                            <input type="number" class="form-control" id="temperatuur" name="temperatuur" required placeholder="Bijvoorbeeld: 22">
+                        </div>
+                        <div class="form-group">
+                            <label for="regenkans">Regenkans (%)</label>
+                            <input type="number" class="form-control" id="regenkans" name="regenkans" required placeholder="Bijvoorbeeld: 30">
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" id="locatieButton" class="btn auto-locatie-button">
+                            <span>Gebruik mijn locatie</span>
+                            <span class="loading" style="display:none;"></span>
+                        </button>
+                        <button type="submit" class="btn btn-primary check-button">Check of je een korte broek aan kunt</button>
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
 </div>
-</body>
-</html>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const locatieButton = document.getElementById('locatieButton');
+            const temperatuurInput = document.getElementById('temperatuur');
+            const regenkansInput = document.getElementById('regenkans');
+            const loadingIndicator = locatieButton.querySelector('.loading');
+            
+            locatieButton.addEventListener('click', function() {
+                // Toon loading indicator
+                loadingIndicator.style.display = 'inline-block';
+                locatieButton.querySelector('span:first-child').textContent = 'Bezig met laden...';
+                
+                // Check if geolocation is available
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+                        
+                        // Call OpenMeteo API to get weather data
+                        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,precipitation_probability&timezone=Europe%2FAmsterdam`)
+                            .then(response => response.json())
+                            .then(data => {
+                                // Update form inputs with the retrieved data
+                                const temperatuur = Math.round(data.current.temperature_2m);
+                                const regenkans = data.current.precipitation_probability;
+                                
+                                temperatuurInput.value = temperatuur;
+                                regenkansInput.value = regenkans;
+                                
+                                // Hide loading indicator
+                                loadingIndicator.style.display = 'none';
+                                locatieButton.querySelector('span:first-child').textContent = 'Locatie gebruikt!';
+                                
+                                // Optionally submit the form automatically
+                                // document.getElementById('weerForm').submit();
+                            })
+                            .catch(error => {
+                                console.error('Error fetching weather data:', error);
+                                loadingIndicator.style.display = 'none';
+                                locatieButton.querySelector('span:first-child').textContent = 'Fout bij laden';
+                                alert('Kon geen weergegevens ophalen. Probeer het later opnieuw.');
+                            });
+                    }, function(error) {
+                        console.error('Geolocation error:', error);
+                        loadingIndicator.style.display = 'none';
+                        locatieButton.querySelector('span:first-child').textContent = 'Gebruik mijn locatie';
+                        alert('Locatie kon niet worden bepaald. Controleer of je toestemming hebt gegeven voor locatietoegang.');
+                    });
+                } else {
+                    loadingIndicator.style.display = 'none';
+                    locatieButton.querySelector('span:first-child').textContent = 'Gebruik mijn locatie';
+                    alert('Geolocation wordt niet ondersteund door deze browser.');
+                }
+            });
+        });
+    </script>
+}

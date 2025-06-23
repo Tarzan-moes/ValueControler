@@ -1,0 +1,265 @@
+/* Algemene stijlen voor de KorteBroek applicatie */
+:root {
+    --primary-color: #3498db;
+    --success-color: #2ecc71;
+    --danger-color: #e74c3c;
+    --light-bg: #f8f9fa;
+    --border-radius: 10px;
+    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #c34f22; /* Achtergrondkleur gewijzigd naar #c34f22 */
+    color: white;
+}
+
+/* Index pagina stijlen */
+.korte-broek-container {
+    padding: 2rem 0;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.vraag-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    text-align: center;
+    box-shadow: var(--box-shadow);
+    color: #333;
+}
+
+.hoofdvraag {
+    color: #c34f22;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.speciaal-bericht {
+    color: #c34f22;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.weer-formulier {
+    margin-top: 2rem;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .form-row {
+        flex-direction: row;
+    }
+}
+
+.form-group {
+    flex: 1;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.check-button {
+    background-color: #c34f22;
+    border: none;
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+}
+
+.check-button:hover {
+    background-color: #a23f1a;
+}
+
+.auto-locatie-button {
+    background-color: #3498db;
+    border: none;
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+    margin-right: 1rem;
+}
+
+.auto-locatie-button:hover {
+    background-color: #2980b9;
+}
+
+/* Weer resultaat pagina stijlen */
+.weer-resultaat-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.resultaat {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+    box-shadow: var(--box-shadow);
+    color: #333;
+}
+
+@media (min-width: 768px) {
+    .resultaat {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+.resultaat-ja {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+}
+
+.resultaat-nee {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+}
+
+.weer-info {
+    flex: 1;
+}
+
+.antwoord-tekst {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.resultaat-ja .antwoord-tekst {
+    color: var(--success-color);
+}
+
+.resultaat-nee .antwoord-tekst {
+    color: var(--danger-color);
+}
+
+.weer-details {
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+}
+
+.weer-item {
+    margin-bottom: 0.5rem;
+}
+
+.weer-label {
+    font-weight: 600;
+    margin-right: 0.5rem;
+}
+
+.weer-waarde {
+    font-weight: 400;
+}
+
+.weer-afbeelding {
+    flex: 1;
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .weer-afbeelding {
+        margin-top: 0;
+    }
+}
+
+.weer-afbeelding img {
+    max-width: 100%;
+    height: auto;
+    max-height: 300px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.navigatie-knoppen {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.terug-knop {
+    background-color: #c34f22;
+    border: none;
+}
+
+.terug-knop:hover {
+    background-color: #a23f1a;
+}
+
+/* Responsive aanpassingen */
+@media (max-width: 767px) {
+    .hoofdvraag {
+        font-size: 2rem;
+    }
+
+    .antwoord-tekst {
+        font-size: 1.5rem;
+    }
+
+    .resultaat {
+        padding: 1.5rem;
+    }
+}
+
+/* Korte broek afbeelding op de Index pagina */
+.korte-broek-image {
+    margin-top: 2rem;
+}
+
+.korte-broek-image img {
+    max-width: 100%;
+    height: auto;
+    max-height: 300px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+/* Navbar stijlen aanpassen voor nieuwe achtergrond */
+header .navbar {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Footer stijlen aanpassen voor nieuwe achtergrond */
+footer {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.loading {
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+.loading:after {
+    content: ' ';
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    border-color: #fff transparent #fff transparent;
+    animation: loading 1.2s linear infinite;
+}
+
+@keyframes loading {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
